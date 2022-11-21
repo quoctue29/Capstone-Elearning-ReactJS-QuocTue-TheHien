@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { quanLyCourseServices } from '../../services/quanLyCourseServices'
 
 const initialState = {
-    listKhoaHoc: [], isFetchListKhoaHoc: false, errListKhoaHoc: undefined,number: 1
+    listKhoaHoc: [],KhoaHocDetail: undefined, isFetchListKhoaHoc: false, errListKhoaHoc: undefined,number: 1
 }
 
 export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } = createSlice({
@@ -24,10 +24,24 @@ export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } = 
             state.errListKhoaHoc = action.payload
             state.isFetchListKhoaHoc = false
          })
+
+         .addCase(getChiTietKhoaHoc.pending, (state, action)=>{
+            state.isFetchListKhoaHoc = true
+        })
+        .addCase(getChiTietKhoaHoc.fulfilled, (state, action)=>{
+            state.isFetchListKhoaHoc = false
+            state.KhoaHocDetail = action.payload
+        })
+        .addCase(getChiTietKhoaHoc.rejected, (state, action)=>{
+            state.isFetchListKhoaHoc = false
+            state.KhoaHocDetail = action.payload
+        })
+
+
     }
 });
 export const getKhoaHocList = createAsyncThunk(
-   'quanLyKhoaHocReducer/getKhoaHocList', //action type
+   'quanLyKhoaHocReducer/getKhoaHocList',
    async (data, { dispatch, getState, rejectWithValue }) => {
        try {
            const value = getState().quanLyKhoaHocReducer
@@ -39,3 +53,25 @@ export const getKhoaHocList = createAsyncThunk(
        }
    }
 )
+export const getChiTietKhoaHoc = createAsyncThunk(
+    'quanLyKhoaHocReducer/getChiTietKhoaHoc',
+    async (detail, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await quanLyCourseServices.getChiTietKhoaHoc(detail)
+            return result.data
+        }catch(err){
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+// export const getDanhMucKhoaHoc = createAsyncThunk(
+//     'quanLyKhoaHocReducer/getDanhMucKhoaHoc',
+//     async (danhmuc, { dispatch, getState, rejectWithValue }) => {
+//         try {
+//             const result = await quanLyCourseServices.getDanhMucKhoaHoc()
+//             return result.data
+//         }catch(err){
+//             return rejectWithValue(err.response.data)
+//         }
+//     }
+// )
