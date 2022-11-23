@@ -5,6 +5,9 @@ import Profile from "../pages/pageProfile/Profile";
 import Home from "../pages/pageHome/Home";
 import Detail from "../pages/pageHome/detail/Detail";
 import DanhMuc from "../pages/pageHome/listDanhMuc/DanhMuc";
+import UserLayout from "../components/layouts/userLayout/UserLayout";
+import Login from "../pages/pageLogin/Login";
+import Register from "../pages/pageRegister/Register";
 
 export default function Routers() {
   return useRoutes([
@@ -35,20 +38,20 @@ export default function Routers() {
       ],
     },
 
-    // {
-    //    path: 'user',
-    //    element: <UserLayout />,
-    //    children: [
-    //       {
-    //          path: 'login',
-    //          element: <Login />
-    //       },
-    //       {
-    //          path: 'register',
-    //          element: <Register />
-    //       },
-    //    ]
-    // },
+    {
+       path: 'user',
+       element: <UserLayout />,
+       children: [
+          {
+             path: 'login',
+             element: <Login />,
+          },
+          {
+             path: 'register',
+             element: <Register/>
+          },
+       ]
+    },
 
     // {
     //    path: 'admin',

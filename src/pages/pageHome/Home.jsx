@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { getKhoaHocList } from "../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
 import { useQuanLyKhoaHoc } from "../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
 import Banner from "./banner/Banner";
+import Intro from "./intro/Intro";
 import Course from "./listCourse/Course";
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
   return (
     <div>
       <Banner />
+      <Intro/>
       <Course listKhoaHoc={listKhoaHoc} />
     </div>
   );
