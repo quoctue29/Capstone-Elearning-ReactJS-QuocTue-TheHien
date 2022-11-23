@@ -1,30 +1,29 @@
 import React from "react";
+import "./banner.css";
 
 const Banner = (props) => {
   const { Carosel } = props;
   return (
-      <div className="carousel-inner relative overflow-hidden h-[600px] bg-bottom bg-cover bg-no-repeat">
-        <div className="carousel-item active relative float-left bg-bottom bg-cover bg-no-repeat bg-center">
-          <video
-            className="min-w-100 min-h-full max-w-fit xl:min-w-0 xl:min-h-600"
-            playsInline
-            autoPlay
-            muted
-            loop
-          >
-            <source
-              className
-              src="https://mdbootstrap.com/img/video/Lines.mp4"
-              type="video/mp4"
+    <section className="cover">
+      <div className="cover__content">
+        <h1>KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN</h1>
+        <p>
+        Học thật, dự án thật, việc làm thật
+        <br />
+        Trở thành lập trình chuyên nghiệp 
+        tại CyberLearn!
+        </p>
+        <form className="cover__form">
+          <div className="input-group">
+            <input
+              type="text"
+              className="bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
+              placeholder="Search..."
             />
-          </video>
-          <div
-            className="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.6)" }}
-          >
           </div>
-        </div>
+        </form>
       </div>
+    </section>
   );
 };
 

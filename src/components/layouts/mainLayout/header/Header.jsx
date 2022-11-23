@@ -1,7 +1,8 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <nav className="flex items-center justify-between flex-wrap bg-black py-4 lg:px-12 shadow border-solid border-t-2 border-amber-700">
       <div className="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0">
@@ -34,6 +35,7 @@ const Header = () => {
         <div className="text-md font-bold lg:flex-grow">
           <NavLink
             href="#responsive-header"
+            to="danhmuc"
             className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2"
           >
             DANH SÁCH KHÓA HỌC
@@ -66,12 +68,20 @@ const Header = () => {
           </button>
         </div>
         <div className="flex ">
-        <button href="#"
-                   class="block text-md px-4 py-2 rounded text-amber-500 ml-2 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0">Sign
-                    in</button>
-    
-                <button href="#"
-                   class=" block text-md px-4  ml-2 py-2 rounded text-amber-500 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0">Login</button>
+          <button
+            href="/user/register"
+            class="block text-md px-4 py-2 rounded text-amber-500 ml-2 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
+          >
+            Sign in
+          </button>
+
+          <button onClick={() =>{
+            navigate("/user/login");
+          }}
+            class=" block text-md px-4  ml-2 py-2 rounded text-amber-500 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
+          >
+            Login
+          </button>
         </div>
       </div>
     </nav>

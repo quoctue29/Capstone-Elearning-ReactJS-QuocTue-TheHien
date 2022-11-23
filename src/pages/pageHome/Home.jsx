@@ -1,12 +1,23 @@
-import React from 'react'
-import Banner from './banner/Banner'
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getKhoaHocList } from "../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
+import { useQuanLyKhoaHoc } from "../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
+import Banner from "./banner/Banner";
+import Intro from "./intro/Intro";
+import Course from "./listCourse/Course";
 
-const Home = () => {
+export default function Home() {
+  const dispatch = useDispatch();
+  const { listKhoaHoc } = useQuanLyKhoaHoc();
+  useEffect(() => {
+    window.scroll(0, 0);
+    dispatch(getKhoaHocList());
+  }, []);
   return (
     <div>
       <Banner />
+      <Intro/>
+      <Course listKhoaHoc={listKhoaHoc} />
     </div>
-  )
+  );
 }
-
-export default Home
