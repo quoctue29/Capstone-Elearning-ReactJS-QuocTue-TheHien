@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getKhoaHocList } from "../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
+import {
+  getKhoaHocList,
+  getKhoaHocTheoDanhMuc,
+} from "../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
 import { useQuanLyKhoaHoc } from "../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
 import Banner from "./banner/Banner";
 import Intro from "./intro/Intro";
@@ -16,7 +19,7 @@ export default function Home() {
   return (
     <div>
       <Banner />
-      <Intro/>
+      <Intro />
       <Course listKhoaHoc={listKhoaHoc} />
     </div>
   );

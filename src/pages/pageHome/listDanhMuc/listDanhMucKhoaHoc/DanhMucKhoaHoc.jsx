@@ -1,12 +1,11 @@
 import React from "react";
 import { memo } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Category(props) {
+function DanhMucKhoaHoc(props) {
   const navigate = useNavigate();
-  const { listDanhMuc } = props;
+  const { listKhoaHocTheoDanhMuc } = props;
   return (
     <Container className=" container pb-10 pt-5 overflow-hidden">
       <div
@@ -17,15 +16,31 @@ function Category(props) {
         <span className="text-gray-500">Các khóa học phổ biến</span>
       </div>
       <div className="mx-5">
-        {[...listDanhMuc].reverse().map((khoaHoc, i) => (
+        {[...listKhoaHocTheoDanhMuc].reverse().map((khoaHoc, i) => (
           <div key={i}>
             <div className="p-5">
               <div className="shadow-lg border">
-                <div className="overflow-hidden flex flex-wrap">
+                <div
+                  className="overflow-hidden flex flex-wrap"
+                  onClick={() => navigate(`/detail/${khoaHoc.maKhoaHoc}`)}
+                >
+                  <img
+                    src={khoaHoc.hinhAnh}
+                    alt=""
+                    className="w-[200px] h-[200px] flex "
+                  />
                   <div className="w-[900px] ml-14 text-xl">
-                    <a href="#khoahoc" className="text-black">
-                      <p>{khoaHoc.tenDanhMuc}</p>
-                    </a>
+                    <p>{khoaHoc.tenKhoaHoc}</p>
+                    <p>Mô tả: {khoaHoc.moTa}</p>
+                    <p>Lượt xem: {khoaHoc.luotXem}</p>
+                    <div className="flex flex-col justify-between">
+                      <button
+                        onClick={() => navigate(`/detail/${khoaHoc.maKhoaHoc}`)}
+                        className="w-full font-bold transition duration-300 mb-0 bg-yellow-500 text-lg p-1  shadow hover:bg-red-600 "
+                      >
+                        Đăng ký
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -37,9 +52,9 @@ function Category(props) {
   );
 }
 
-export default memo(Category);
+export default memo(DanhMucKhoaHoc);
 const Container = styled.div`
-  &.Category {
+  &.DanhMucKhoaHoc {
     .slick-prev {
       width: initial;
       height: initial;

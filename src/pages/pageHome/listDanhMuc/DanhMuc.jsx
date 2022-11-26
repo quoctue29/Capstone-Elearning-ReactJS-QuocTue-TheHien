@@ -4,23 +4,23 @@ import { useDispatch } from "react-redux";
 import {
   getDanhMucKhoaHoc,
   getKhoaHocList,
+  getKhoaHocTheoDanhMuc,
 } from "../../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
 import { useQuanLyKhoaHoc } from "../../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
+import ListKhoaHoc from "../listKhoaHoc/ListKhoaHoc";
 import Category from "./listcategory/Category";
 
 export default function DanhMuc() {
   const dispatch = useDispatch();
-  const { listKhoaHoc } = useQuanLyKhoaHoc();
+  const { listDanhMuc } = useQuanLyKhoaHoc();
   useEffect(() => {
-    dispatch(getKhoaHocList());
+    dispatch(getDanhMucKhoaHoc());
   }, []);
   return (
     <div className=" items-center justify-between">
-      <h1 className="p-4 text-center bg-red-400 text-2xl">
-        LẬP TRÌNH FRONT-END
-      </h1>
       <div>
-        <Category listKhoaHoc={listKhoaHoc} />
+        <Category listDanhMuc={listDanhMuc} />
+        <ListKhoaHoc />
       </div>
     </div>
   );

@@ -8,6 +8,7 @@ import DanhMuc from "../pages/pageHome/listDanhMuc/DanhMuc";
 import UserLayout from "../components/layouts/userLayout/UserLayout";
 import Login from "../pages/pageLogin/Login";
 import Register from "../pages/pageRegister/Register";
+import DanhMucKhoaHoc from "../pages/pageHome/listDanhMuc/listDanhMucKhoaHoc/DanhMucKhoaHoc";
 
 export default function Routers() {
   return useRoutes([
@@ -32,6 +33,10 @@ export default function Routers() {
           element: <Profile />,
         },
         {
+          path: "danhmuckhoahoc",
+          element: <DanhMucKhoaHoc />,
+        },
+        {
           path: "danhmuc",
           element: <DanhMuc />,
         },
@@ -39,18 +44,18 @@ export default function Routers() {
     },
 
     {
-       path: 'user',
-       element: <UserLayout />,
-       children: [
-          {
-             path: 'login',
-             element: <Login />,
-          },
-          {
-             path: 'register',
-             element: <Register/>
-          },
-       ]
+      path: "user",
+      element: <UserLayout />,
+      children: [
+        {
+          path: "login",
+          element: <Login />,
+        },
+        {
+          path: "register",
+          element: <Register />,
+        },
+      ],
     },
 
     // {

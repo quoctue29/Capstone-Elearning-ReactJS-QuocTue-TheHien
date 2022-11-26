@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import DropdownMenu from "../../../../pages/pageHome/listDanhMuc/dropmenu/DropdownMenu";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Header = () => {
             to="danhmuc"
             className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2"
           >
-            DANH SÁCH KHÓA HỌC
+            <DropdownMenu />
           </NavLink>
         </div>
         {/* This is an example component */}
@@ -75,9 +76,10 @@ const Header = () => {
             Sign in
           </button>
 
-          <button onClick={() =>{
-            navigate("/user/login");
-          }}
+          <button
+            onClick={() => {
+              navigate("/user/login");
+            }}
             class=" block text-md px-4  ml-2 py-2 rounded text-amber-500 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
           >
             Login

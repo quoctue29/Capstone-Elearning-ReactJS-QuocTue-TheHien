@@ -7,7 +7,10 @@ export const quanLyCourseServices ={
     getChiTietKhoaHoc: (maKhoaHoc) => {
         return api.get(`/api/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`)
     },
-    // getDanhMucKhoaHoc: () => {
-    //     return api.get('/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01')
-    // }
+    getDanhMucKhoaHoc: () => {
+        return api.get('/api/QuanLyKhoaHoc/LayDanhMucKhoaHoc')
+    },
+    getKhoaHocTheoDanhMuc: ()=>{
+        return api.get('/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=TuDuy&MaNhom=GP01')
+    }
 }

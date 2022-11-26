@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { quanLyCourseServices } from '../../services/quanLyCourseServices'
 
 const initialState = {
-    listKhoaHoc: [],KhoaHocDetail: undefined, isFetchListKhoaHoc: false, errListKhoaHoc: undefined,number: 1
+    listKhoaHoc: [],listDanhMuc: [],KhoaHocDetail: undefined,listKhoaHocTheoDanhMuc:[], isFetchListKhoaHoc: false, errListKhoaHoc: undefined,number: 1
 }
 
 export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } = createSlice({
@@ -37,7 +37,25 @@ export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } = 
             state.KhoaHocDetail = action.payload
         })
 
+        .addCase(getDanhMucKhoaHoc.pending, (state, action) => {
+            state.isFetchListKhoaHoc = true
+         }).addCase(getDanhMucKhoaHoc.fulfilled, (state, action) => {
+            state.listDanhMuc = action.payload
+            state.isFetchListKhoaHoc = false
+         }).addCase(getDanhMucKhoaHoc.rejected, (state, action) => {
+            state.errListKhoaHoc = action.payload
+            state.isFetchListKhoaHoc = false
+         })
 
+        .addCase(getKhoaHocTheoDanhMuc.pending, (state, action) => {
+            state.isFetchListKhoaHoc = true
+         }).addCase(getKhoaHocTheoDanhMuc.fulfilled, (state, action) => {
+            state.listKhoaHocTheoDanhMuc = action.payload
+            state.isFetchListKhoaHoc = false
+         }).addCase(getKhoaHocTheoDanhMuc.rejected, (state, action) => {
+            state.errListKhoaHoc = action.payload
+            state.isFetchListKhoaHoc = false
+         })
     }
 });
 export const getKhoaHocList = createAsyncThunk(
@@ -46,7 +64,6 @@ export const getKhoaHocList = createAsyncThunk(
        try {
            const value = getState().quanLyKhoaHocReducer
            const result = await quanLyCourseServices.getKhoaHocList();
-           console.log(result);
            return result.data
        } catch (error) {
            return rejectWithValue(error.response.data)
@@ -64,14 +81,25 @@ export const getChiTietKhoaHoc = createAsyncThunk(
         }
     }
 )
-// export const getDanhMucKhoaHoc = createAsyncThunk(
-//     'quanLyKhoaHocReducer/getDanhMucKhoaHoc',
-//     async (danhmuc, { dispatch, getState, rejectWithValue }) => {
-//         try {
-//             const result = await quanLyCourseServices.getDanhMucKhoaHoc()
-//             return result.data
-//         }catch(err){
-//             return rejectWithValue(err.response.data)
-//         }
-//     }
-// )
+export const getDanhMucKhoaHoc = createAsyncThunk(
+    'quanLyKhoaHocReducer/getDanhMucKhoaHoc',
+    async (danhmuc, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await quanLyCourseServices.getDanhMucKhoaHoc()
+            return result.data
+        }catch(err){
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
+export const getKhoaHocTheoDanhMuc = createAsyncThunk(
+    'quanLyKhoaHocReducer/getKhoaHocTheoDanhMuc',
+    async (KHdanhmuc, { dispatch, getState, rejectWithValue }) => {
+        try {
+            const result = await quanLyCourseServices.getKhoaHocTheoDanhMuc()
+            return result.data
+        }catch(err){
+            return rejectWithValue(err.response.data)
+        }
+    }
+)
