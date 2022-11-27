@@ -16,7 +16,7 @@ function Course(props) {
     slidesToShow: 4,
     slidesToScroll: 3,
     initialSlide: 0,
-    rows: 1,
+    rows: 2,
     responsive: [
       {
         breakpoint: 1024,

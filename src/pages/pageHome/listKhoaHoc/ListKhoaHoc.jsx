@@ -1,45 +1,43 @@
 import React from "react";
 import { Divider, Tabs } from "antd";
-import KhoaHoc from "./KhoaHoc/KhoaHoc";
+//import KhoaHoc from "./KhoaHoc/KhoaHoc";
 import { useDispatch } from "react-redux";
 import { useQuanLyKhoaHoc } from "../../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
 import {
-  getKhoaHocList,
-  getKhoaHocTheoDanhMuc,
+  getDanhMucKhoaHoc,
+  // getKhoaHocList,
+  // getKhoaHocTheoDanhMuc,
 } from "../../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
 import { useEffect } from "react";
-import TabPane from "antd/lib/tabs/TabPane";
-import KhoaHocTheoDanhMuc from "./KhoaHocTheoDanhMuc/KhoaHocTheoDanhMuc";
+//import TabPane from "antd/lib/tabs/TabPane";
+//import KhoaHocTheoDanhMuc from "./KhoaHocTheoDanhMuc/KhoaHocTheoDanhMuc";
+import { useState } from "react";
+import { quanLyCourseServices } from "../../../services/quanLyCourseServices";
 
 export default function ListKhoaHoc() {
   const dispatch = useDispatch();
+  const [filter, setFilter] = useState("Backend");
   const { listKhoaHoc, listKhoaHocTheoDanhMuc } = useQuanLyKhoaHoc();
-  console.log(listKhoaHoc);
+  const { listDanhMuc } = useQuanLyKhoaHoc();
+  console.log(listDanhMuc);
   useEffect(() => {
-    dispatch(getKhoaHocList());
-    dispatch(getKhoaHocTheoDanhMuc());
+    dispatch(getDanhMucKhoaHoc());
   }, []);
+  const handleChange = async (activeKey) => {
+    console.log(activeKey);
+    const res = await quanLyCourseServices.getKhoaHocTheoDanhMuc(activeKey);
+    console.log(res);
+  };
   return (
     <div className="container" id="khoahoc">
-      <Tabs defaultActiveKey="1">
-        <TabPane tab="Các khóa học" key="1">
-          <KhoaHoc listKhoaHoc={listKhoaHoc} />
-        </TabPane>
-        <TabPane tab="Lập trình Backend" key="2">
-          <KhoaHocTheoDanhMuc listKhoaHocTheoDanhMuc={listKhoaHocTheoDanhMuc} />
-        </TabPane>
-        <TabPane tab="Thiết kế Web" key="3">
-          Content of Tab Pane 2
-        </TabPane>
-        <TabPane tab="Lập trình Front end" key="4">
-          Content of Tab Pane 3
-        </TabPane>
-        <TabPane tab="Lập trình Full Stack" key="5">
-          Content of Tab Pane 3
-        </TabPane>
-        <TabPane tab="Tư duy lập trình" key="6">
-          Content of Tab Pane 3
-        </TabPane>
+      <Tabs defaultActiveKey="BackEnd" onChange={handleChange}>
+        {listDanhMuc.length > 0 &&
+          listDanhMuc.map((category, index) => (
+            <Tabs.TabPane
+              tab={category.tenDanhMuc}
+              key={category.maDanhMuc}
+            ></Tabs.TabPane>
+          ))}
       </Tabs>
     </div>
   );

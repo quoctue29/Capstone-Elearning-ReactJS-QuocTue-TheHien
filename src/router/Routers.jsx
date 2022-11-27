@@ -8,7 +8,15 @@ import DanhMuc from "../pages/pageHome/listDanhMuc/DanhMuc";
 import UserLayout from "../components/layouts/userLayout/UserLayout";
 import Login from "../pages/pageLogin/Login";
 import Register from "../pages/pageRegister/Register";
-import DanhMucKhoaHoc from "../pages/pageHome/listDanhMuc/listDanhMucKhoaHoc/DanhMucKhoaHoc";
+import AdminLayout from "../components/layouts/adminLayout/AdminLayout";
+import QuanLyCoures from "../pages/admin/quanLyKhoaHoc/QuanLyCoures";
+import AddCourse from "../pages/admin/quanLyKhoaHoc/addCoures/AddCourse";
+import CreateCourse from "../pages/admin/quanLyKhoaHoc/createSourse/CreateCourse";
+import EditCoures from "../pages/admin/quanLyKhoaHoc/editCoures/EditCoures";
+import QuanLyUsers from "../pages/admin/quanLyUsers/QuanLyUsers";
+import SuaNguoiDung from "../pages/admin/quanLyUsers/suaNguoiDung/SuaNguoiDung";
+import ThemNguoiDung from "../pages/admin/quanLyUsers/themNguoiDung/ThemNguoiDung";
+import Search from "../pages/pageHome/search/Search";
 
 export default function Routers() {
   return useRoutes([
@@ -33,12 +41,12 @@ export default function Routers() {
           element: <Profile />,
         },
         {
-          path: "danhmuckhoahoc",
-          element: <DanhMucKhoaHoc />,
-        },
-        {
           path: "danhmuc",
           element: <DanhMuc />,
+        },
+        {
+          path: "timKiemKhoaHoc",
+          element: <Search />,
         },
       ],
     },
@@ -58,39 +66,39 @@ export default function Routers() {
       ],
     },
 
-    // {
-    //    path: 'admin',
-    //    element: <AdminLayout />,
-    //    children: [
-    //       {
-    //          path: 'films',
-    //          element: <QuanLyPhim />
-    //       },
-    //       {
-    //          path: 'films/addnew',
-    //          element: <ThemPhim />
-    //       },
-    //       {
-    //          path: 'films/edit/:id',
-    //          element: <SuaPhim />
-    //       },
-    //       {
-    //          path: 'films/showtime/:id',
-    //          element: <TaoLichChieu />
-    //       },
-    //       {
-    //          path: 'users',
-    //          element: <QuanLyUsers/>
-    //       },
-    //       {
-    //          path: 'users/themnguoidung',
-    //          element: <ThemNguoiDung />
-    //       },
-    //       {
-    //          path: 'users/suanguoidung/:id',
-    //          element: <SuaNguoiDung />
-    //       },
-    //    ]
-    // },
+    {
+      path: "admin",
+      element: <AdminLayout />,
+      children: [
+        {
+          path: "coures",
+          element: <QuanLyCoures />,
+        },
+        {
+          path: "coures/addnew",
+          element: <AddCourse />,
+        },
+        {
+          path: "coures/edit/:id",
+          element: <EditCoures />,
+        },
+        {
+          path: "coures/create/:id",
+          element: <CreateCourse />,
+        },
+        {
+          path: "users",
+          element: <QuanLyUsers />,
+        },
+        {
+          path: "users/themnguoidung",
+          element: <ThemNguoiDung />,
+        },
+        {
+          path: "users/suanguoidung/:id",
+          element: <SuaNguoiDung />,
+        },
+      ],
+    },
   ]);
 }
