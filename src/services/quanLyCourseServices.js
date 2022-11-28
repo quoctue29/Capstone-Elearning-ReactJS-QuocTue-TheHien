@@ -14,7 +14,7 @@ export const quanLyCourseServices = {
   },
   getKhoaHocTheoDanhMuc: (params) => {
     return api.get(
-      "/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=TuDuy&MaNhom=GP01",
+      "/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?MaNhom=GP01",
       { params }
     );
   },

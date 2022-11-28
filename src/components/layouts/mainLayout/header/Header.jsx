@@ -1,8 +1,12 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Navigate, NavLink, useNavigate } from "react-router-dom";
-
+import { UserLogin } from "../../../../constants/api";
+import { quanLyNguoiDungActions } from "../../../../stores/quanLyNguoiDungReducer/quanLyNguoiDungReducer";
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const nguoiDung = JSON.parse(localStorage.getItem(UserLogin)) ;
   return (
     <nav className="flex items-center justify-between flex-wrap bg-black py-4 lg:px-12 shadow border-solid border-t-2 border-amber-700">
       <div className="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0">
@@ -67,25 +71,33 @@ const Header = () => {
             </svg>
           </button>
         </div>
-        <div className="flex ">
-          <button
-            onClick={() => {
-              navigate("/user/register");
-            }}
-            class="block text-md px-4 py-2 rounded text-amber-500 ml-2 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
-          >
-            Register
-          </button>
-
-          <button
-            onClick={() => {
-              navigate("/user/login");
-            }}
-            class=" block text-md px-4  ml-2 py-2 rounded text-amber-500 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
-          >
-            Login
-          </button>
-        </div>
+        <div className="hidden lg:block">
+                  {nguoiDung ? (
+                     <div className="inline-block space-x-2">
+                        <NavLink to="profile" className="inline-block text-lg rounded-lg px-6 py-2 text-white bg-amber-600 hover:bg-gray-500 hover:text-white transition duration-300">
+                           Hello! {nguoiDung.taiKhoan}
+                        </NavLink>
+                        <button onClick={() => {
+                           dispatch(quanLyNguoiDungActions.dangXuat());
+                           navigate("/home");
+                        }} className="inline-block px-4 py-2 text-black bg-white rounded-md shadow hover:bg-gray-500 hover:text-white transition duration-300">
+                           Đăng xuất
+                        </button>
+                        {nguoiDung.maLoaiNguoiDung === 'GV' ? <NavLink to="/admin/coures" className="inline-block px-4 py-2 text-white bg-gray-800 rounded-md shadow hover:bg-gray-500 hover:text-white transition duration-300">
+                           Page Admin
+                        </NavLink> : ''}
+                     </div>
+                  ) : (
+                     <div className="inline-block space-x-2">
+                        <NavLink to="/user/login" className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2">
+                           Đăng nhập
+                        </NavLink>
+                        <NavLink to="/user/register" className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2">
+                           Đăng kí
+                        </NavLink>
+                     </div>
+                  )}
+               </div>
       </div>
     </nav>
   );
