@@ -17,12 +17,12 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
     name: 'quanLyKhoaHoc',
     initialState,
     reducers: {
-        // dangXuat: (state, action) => {
-        //     state.nguoiDung = null
-        //     state.dangKy = null
-        //     localStorage.removeItem(UserLogin)
-        //     localStorage.removeItem(AccessToken)
-        //  },
+        dangXuat: (state, action) => {
+            state.nguoiDung = null
+            state.dangKy = null
+            localStorage.removeItem(UserLogin)
+            localStorage.removeItem(AccessToken)
+         },
          dangKy: (state, action) => {
             state.errDangKi = undefined
          },
@@ -53,7 +53,7 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
             state.isFetchNguoiDung = false
             state.errNguoiDung = undefined
             localStorage.setItem(UserLogin, JSON.stringify(action.payload))
-            // localStorage.setItem(AccessToken, JSON.stringify(action.payload.accessToken))
+            localStorage.setItem(AccessToken, JSON.stringify(action.payload.accessToken))
          }).addCase(dangNhap.rejected, (state, action) => {
             state.errNguoiDung = action.payload
             state.isFetchNguoiDung = false
@@ -140,9 +140,9 @@ export const dangNhap = createAsyncThunk('quanLyNguoiDung/dangNhap',
    async (taiKhoan, { rejectWithValue }) => {
       try {
          const result = await quanLyNguoiDung.dangNhap(taiKhoan)
-         return result.data.content
+         return result.data
       } catch (err) {
-         return rejectWithValue(err.response.data.content)
+         return rejectWithValue(err.response.data)
       }
    }
 )
