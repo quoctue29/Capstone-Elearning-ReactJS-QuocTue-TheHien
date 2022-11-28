@@ -18,4 +18,13 @@ export const quanLyCourseServices = {
       { params }
     );
   },
+  themKhoaHoc: (data)=>{
+    return api.get('/api/QuanLyKhoaHoc/ThemKhoaHoc',data)
+  },
+  capNhatPhimUpload: (data) => {
+    return api.post(`/api/QuanLyKhoaHoc/CapNhatKhoaHoc`, data)
+ },
+ xoaPhim: (maKH) => {
+    return api.delete(`/api/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKH}`)
+ },
 };
