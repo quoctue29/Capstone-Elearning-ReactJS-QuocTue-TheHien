@@ -4,6 +4,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Slider from "react-slick";
 import styled from "styled-components";
+import { UserLogin } from "../../../constants/api";
+import "./course.css"
+
 
 function Course(props) {
   const navigate = useNavigate();
@@ -51,25 +54,42 @@ function Course(props) {
         <hr />
         <span className="text-gray-500">Các khóa học mới nhất</span>
       </div>
-      <Slider {...settings} className="-mx-5">
+      <Slider {...settings} className="mx-5">
         {[...listKhoaHoc].reverse().map((khoaHoc, i) => (
           <div key={i}>
             <div className="p-5">
-              <div className="shadow-lg border">
+              <div className="card">
                 <div className="overflow-hidden">
                   <img
                     src={khoaHoc.hinhAnh}
                     alt=""
-                    className="w-full h-[350px] "
+                    className="w-full h-[250px] "
                     title={khoaHoc.moTa}
                   />
                 </div>
+                <div class="card-body">
+                  <h5 class="card-title" >
+                  {khoaHoc.tenKhoaHoc.slice(0,25)+"..."}
+                  </h5>
+                  <p class="card-text">{khoaHoc.moTa.slice(0,25)+"..."}</p>
+                  <div class="card__star">
+                    <span>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star-half"></i>
+                    </span>
+                    <span class="card__rate">{khoaHoc.danhGia}</span>
+                    <span class="card__total">({khoaHoc.luotXem})</span>
+                  </div>
+                </div>
                 <div className="flex flex-col justify-between">
-                  <button
-                    onClick={() => navigate(`/detail/${khoaHoc.maKhoaHoc}`)}
+                  <button 
+                    onClick={() => {localStorage.getItem(UserLogin) ?  navigate(`/detail/${khoaHoc.maKhoaHoc}`)  : navigate('/user/login')}}
                     className="w-full font-bold transition duration-300 mb-0 bg-yellow-500 text-lg p-1  shadow hover:bg-red-600 "
                   >
-                    Đăng ký
+                    Xem chi tiết
                   </button>
                 </div>
               </div>
@@ -91,7 +111,7 @@ const Container = styled.div`
       bottom: -35px;
       top: auto;
       &::before {
-        color: black;
+        color: gray;
         font-size: 30px;
       }
     }
@@ -102,7 +122,7 @@ const Container = styled.div`
       right: 20px;
       top: auto;
       &::before {
-        color: black;
+        color: gray;
         font-size: 30px;
       }
     }

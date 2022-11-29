@@ -5,18 +5,20 @@ import { quanLyNguoiDung } from '../../services/quanLyNguoiDungServices';
 const initialState = {
     listnguoidung: [], isFetchListNguoiDung: false, errListNguoiDung: undefined,nguoiDung: null, isFetchNguoiDung: false, errNguoiDung: undefined,
     dangKy: null, isFetchDangKi: false, errDangKi: undefined,
+    ttTaiKhoan: null, isFetchTtTaiKhoan: false, errTtTaiKhoan: undefined,
+    danhSachNguoiDung: null, isFetchDanhSachNguoiDung: false, errDanhSachNguoiDung: undefined,
 }
 
 export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions } = createSlice({
     name: 'quanLyKhoaHoc',
     initialState,
     reducers: {
-        // dangXuat: (state, action) => {
-        //     state.nguoiDung = null
-        //     state.dangKy = null
-        //     localStorage.removeItem(UserLogin)
-        //     localStorage.removeItem(AccessToken)
-        //  },
+        dangXuat: (state, action) => {
+            state.nguoiDung = null
+            state.dangKy = null
+            localStorage.removeItem(UserLogin)
+            localStorage.removeItem(AccessToken)
+         },
          dangKy: (state, action) => {
             state.errDangKi = undefined
          },
@@ -35,7 +37,7 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
             state.isFetchNguoiDung = false
             state.errNguoiDung = undefined
             localStorage.setItem(UserLogin, JSON.stringify(action.payload))
-            // localStorage.setItem(AccessToken, JSON.stringify(action.payload.accessToken))
+            localStorage.setItem(AccessToken, JSON.stringify(action.payload.accessToken))
          }).addCase(dangNhap.rejected, (state, action) => {
             state.errNguoiDung = action.payload
             state.isFetchNguoiDung = false
@@ -50,6 +52,26 @@ export const { reducer: quanLyNguoiDungReducer, actions: quanLyNguoiDungActions 
          }).addCase(dangKyNguoiDung.rejected, (state, action) => {
             state.errDangKi = action.payload
             state.isFetchDangKi = false
+         })
+              // thông tin tài khoản
+              .addCase(thongTinTaiKhoan.pending, (state, action) => {
+               state.isFetchTtTaiKhoan = true
+            }).addCase(thongTinTaiKhoan.fulfilled, (state, action) => {
+               state.isFetchTtTaiKhoan = false
+               state.ttTaiKhoan = action.payload
+            }).addCase(thongTinTaiKhoan.rejected, (state, action) => {
+               state.isFetchTtTaiKhoan = false
+               state.errTtTaiKhoan = action.payload
+            })
+                     // lấy danh sách người dùng
+         .addCase(layDanhSachNguoiDung.pending, (state, action) => {
+            state.isFetchDanhSachNguoiDung = true
+         }).addCase(layDanhSachNguoiDung.fulfilled, (state, action) => {
+            state.danhSachNguoiDung = action.payload
+            state.isFetchDanhSachNguoiDung = false
+         }).addCase(layDanhSachNguoiDung.rejected, (state, action) => {
+            state.errDanhSachNguoiDung = action.payload
+            state.isFetchDanhSachNguoiDung = false
          })
          //
         .addCase(getNguoiDung.pending, (state, action) => {
@@ -68,9 +90,10 @@ export const dangNhap = createAsyncThunk('quanLyNguoiDung/dangNhap',
    async (taiKhoan, { rejectWithValue }) => {
       try {
          const result = await quanLyNguoiDung.dangNhap(taiKhoan)
-         return result.data.content
+         console.log(result)
+         return result.data
       } catch (err) {
-         return rejectWithValue(err.response.data.content)
+         return rejectWithValue(err.response.data)
       }
    }
 )
@@ -79,6 +102,26 @@ export const dangKyNguoiDung = createAsyncThunk('quanLyNguoiDung/dangKyNguoiDung
    async (taiKhoan, { rejectWithValue }) => {
       try {
          const result = await quanLyNguoiDung.dangKy(taiKhoan)
+         return result.data.content
+      } catch (err) {
+         return rejectWithValue(err.response.data.content)
+      }
+   }
+)
+export const thongTinTaiKhoan = createAsyncThunk('quanLyNguoiDung/thongTinTaiKhoan',
+   async (data, { rejectWithValue }) => {
+      try {
+         const result = await quanLyNguoiDung.thongTinTaiKhoan()
+         return result.data.content
+      } catch (err) {
+         return rejectWithValue(err.response.data.content)
+      }
+   }
+)
+export const layDanhSachNguoiDung = createAsyncThunk('quanLyNguoiDung/layDanhSachNguoiDung',
+   async (keyword, { rejectWithValue }) => {
+      try {
+         const result = await quanLyNguoiDung.layDanhSachNguoiDung(keyword)
          return result.data.content
       } catch (err) {
          return rejectWithValue(err.response.data.content)

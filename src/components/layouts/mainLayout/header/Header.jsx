@@ -1,8 +1,24 @@
 import React from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { Navigate, NavLink, useNavigate, useSearchParams } from "react-router-dom";
+import { UserLogin } from "../../../../constants/api";
+import { quanLyNguoiDungActions } from "../../../../stores/quanLyNguoiDungReducer/quanLyNguoiDungReducer";
+import { getKhoaHocList } from "../../../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
+import { useQuanLyKhoaHoc } from "../../../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
 const Header = () => {
+  const {handleSubmit } = useForm()
+  const [searchParam, setSearchParam] = useSearchParams()
+  const [tuKhoa, setTuKhoa] = useState()
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const nguoiDung = JSON.parse(localStorage.getItem(UserLogin)) ;
+  const { listKhoaHoc } = useQuanLyKhoaHoc();
+  useEffect(() => {
+    dispatch(getKhoaHocList(`${tuKhoa}${searchParam.get('tuKhoa')}`))
+  },[])
   return (
     <nav className="flex items-center justify-between flex-wrap bg-black py-4 lg:px-12 shadow border-solid border-t-2 border-amber-700">
       <div className="flex justify-between lg:w-auto w-full lg:border-b-0 pl-6 pr-2 border-solid border-b-2 border-gray-300 pb-5 lg:pb-0">
@@ -42,14 +58,25 @@ const Header = () => {
           </NavLink>
         </div>
         {/* This is an example component */}
-        <div className="relative mx-auto text-gray-600 lg:block hidden">
-          <input
+        <form onSubmit={handleSubmit(data => {
+            setSearchParam({ tuKhoa: `${data.paramSearch.trim()}` })
+            setTuKhoa('tuKhoa=')
+         })}  className="relative mx-auto text-gray-600 lg:block hidden">
+          <input 
+           onInput={(e) => {
+            if (e.target.value === '') {
+               setTuKhoa()
+               setSearchParam()
+            }
+         }}
             className="border-2 border-gray-300 bg-white h-10 pl-2 pr-8 rounded-lg text-sm focus:outline-none"
             type="search"
             name="search"
-            placeholder="Search"
+            placeholder="Nhập khóa học"
           />
-          <button type="submit" className="absolute right-0 top-0 mt-3 mr-2">
+          <button onClick={() =>{
+            navigate("/timKiemKhoaHoc");
+          }} type="submit" className="absolute right-0 top-0 mt-3 mr-2">
             <svg
               className="text-gray-600 h-4 w-4 fill-current"
               xmlns="http://www.w3.org/2000/svg"
@@ -66,26 +93,34 @@ const Header = () => {
               <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" />
             </svg>
           </button>
-        </div>
-        <div className="flex ">
-          <button
-            onClick={() => {
-              navigate("/user/register");
-            }}
-            class="block text-md px-4 py-2 rounded text-amber-500 ml-2 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
-          >
-            Register
-          </button>
-
-          <button
-            onClick={() => {
-              navigate("/user/login");
-            }}
-            class=" block text-md px-4  ml-2 py-2 rounded text-amber-500 font-bold hover:text-white mt-4 hover:bg-amber-700 lg:mt-0"
-          >
-            Login
-          </button>
-        </div>
+        </form>
+        <div className="hidden lg:block">
+                  {nguoiDung ? (
+                     <div className="inline-block space-x-2">
+                        <NavLink to="profile" className="inline-block text-lg rounded-lg px-6 py-2 text-white bg-amber-600 hover:bg-gray-500 hover:text-white transition duration-300">
+                           Hello! {nguoiDung.taiKhoan}
+                        </NavLink>
+                        <button onClick={() => {
+                           dispatch(quanLyNguoiDungActions.dangXuat());
+                           navigate("/home");
+                        }} className="inline-block px-4 py-2 text-black bg-white rounded-md shadow hover:bg-gray-500 hover:text-white transition duration-300">
+                           Đăng xuất
+                        </button>
+                        {nguoiDung.maLoaiNguoiDung === 'GV' ? <NavLink to="/admin/coures" className="inline-block px-4 py-2 text-white bg-gray-800 rounded-md shadow hover:bg-gray-500 hover:text-white transition duration-300">
+                           Page Admin
+                        </NavLink> : ''}
+                     </div>
+                  ) : (
+                     <div className="inline-block space-x-2">
+                        <NavLink to="/user/login" className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2">
+                           Đăng nhập
+                        </NavLink>
+                        <NavLink to="/user/register" className="block mt-4 lg:inline-block text-amber-500 lg:mt-0 hover:text-white px-4 py-2 rounded hover:bg-amber-600 mr-2">
+                           Đăng kí
+                        </NavLink>
+                     </div>
+                  )}
+               </div>
       </div>
     </nav>
   );

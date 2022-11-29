@@ -1,34 +1,48 @@
 import moment from "moment";
 import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getChiTietKhoaHoc } from "../../../stores/quanLyKhoaHocReducer/quanLyKhoaHocReducer";
-import { useQuanLyKhoaHoc } from "../../../stores/quanLyKhoaHocReducer/quanLyPhimSelector";
-
+import { quanLyCourseServices } from "../../../services/quanLyCourseServices";
+import { Rate } from "antd";
+//import styled from "styled-components";
 const Detail = () => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { khoaHocDetail } = useQuanLyKhoaHoc();
+  const [detail, setDetail] = useState({});
+
   useEffect(() => {
-    dispatch(getChiTietKhoaHoc(params.maKhoaHoc));
+    (async () => {
+      const res = await quanLyCourseServices.getChiTietKhoaHoc(
+        params.maKhoaHoc
+      );
+      setDetail(res.data);
+      console.log(res);
+    })();
   }, []);
   return (
-    <div>
-      <div className="row">
-        <div className="col-4">
-          <img
-            src={khoaHocDetail?.hinhAnh}
-            className="img-fluid"
-            alt={khoaHocDetail?.biDanh}
+    <div >
+      <div className="py-3 grid sm:grid-cols-2 md:grid-cols-5">
+        <div className="md:col-span-1">
+          <img 
+            src={detail?.hinhAnh}
+            className="w-full"
+            alt={detail?.biDanh}
           />
         </div>
-        <div className="col-8">
-          <p>{khoaHocDetail?.tenKhoaHoc}</p>
-          <p>{khoaHocDetail?.moTa}</p>
-          <p>Lượt xem: {khoaHocDetail?.luotXem}</p>
-          <p>{moment(khoaHocDetail?.ngayTao).format("DD-MM-YYYY hh:mm")}</p>
-          <button className="btn btn-success">Đăng ký</button>
+
+        <div className="md:col-span-3 sm:px-3 pt-3 sm:pt-0">
+          <p className="text-3xl font-semibold text-amber-500 m-0">{detail?.tenKhoaHoc}</p>
+          <p>Mô tả:{detail?.moTa}</p>
+          <p>Lượt xem: {detail?.luotXem}</p>
+          <p>{moment(detail?.ngayTao).format("DD-MM-YYYY hh:mm")}</p>
+          <p> Đánh giá : <Rate
+                  allowHalf
+                  disabled
+                  value={(5 / 10) * detail.danhGia}
+                />
+                 </p>
         </div>
       </div>
     </div>

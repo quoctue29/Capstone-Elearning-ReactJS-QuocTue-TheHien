@@ -2,7 +2,7 @@ import { api } from "../constants/api";
 
 export const quanLyCourseServices = {
   getKhoaHocList: () => {
-    return api.get("/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01");
+    return api.get('/api/QuanLyKhoaHoc/LayDanhSachKhoaHoc?MaNhom=GP01');
   },
   getChiTietKhoaHoc: (maKhoaHoc) => {
     return api.get(
@@ -14,7 +14,7 @@ export const quanLyCourseServices = {
   },
   getKhoaHocTheoDanhMuc: (params) => {
     return api.get(
-      "/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=TuDuy&MaNhom=GP01",
+      "/api/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?MaNhom=GP01",
       { params }
     );
   },

@@ -26,9 +26,9 @@ const Login = () => {
        }
     }
  });
-  useEffect(() => {
-    dispatch(quanLyNguoiDungActions.dangNhap())
- }, []);
+//   useEffect(() => {
+//     dispatch(quanLyNguoiDungActions.dangNhap())
+//  }, []);
   return (
     <div className="lg:flex">
         <div className="lg:w-1/2 xl:max-w-screen-sm">
@@ -73,7 +73,7 @@ const Login = () => {
           <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
             <button
               className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
-            xl:text-bold" type="submit" onClick={handleSubmit}
+            xl:text-bold" type="submit" 
             >
               Đăng Nhập
             </button>

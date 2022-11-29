@@ -8,7 +8,6 @@ const initialState = {
   listKhoaHocTheoDanhMuc: [],
   isFetchListKhoaHoc: false,
   errListKhoaHoc: undefined,
-  number: 1,
 };
 
 export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } =
@@ -16,9 +15,6 @@ export const { reducer: quanLyKhoaHocReducer, actions: quanLyKhoaHocActions } =
     name: "quanLyKhoaHoc",
     initialState,
     reducers: {
-      increase: (state, action) => {
-        state.number = state.number + action.payload;
-      },
     },
     extraReducers: (builder) => {
       builder
@@ -85,9 +81,10 @@ export const getKhoaHocList = createAsyncThunk(
 );
 export const getChiTietKhoaHoc = createAsyncThunk(
   "quanLyKhoaHocReducer/getChiTietKhoaHoc",
-  async (detail, { dispatch, getState, rejectWithValue }) => {
+  async (payload, { dispatch, getState, rejectWithValue }) => {
     try {
-      const result = await quanLyCourseServices.getChiTietKhoaHoc(detail);
+      const result = await quanLyCourseServices.getChiTietKhoaHoc(payload);
+      console.log(result);
       return result.data;
     } catch (err) {
       return rejectWithValue(err.response.data);

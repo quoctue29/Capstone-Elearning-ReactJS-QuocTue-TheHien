@@ -11,4 +11,10 @@ export const quanLyNguoiDung = {
      dangKy: (taiKhoan) => {
         return api.post('/api/QuanLyNguoiDung/DangKy', taiKhoan)
      },
+     thongTinTaiKhoan:()=>{
+        return api.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
+     },
+     layDanhSachNguoiDung:(keyword)=>{
+        return api.get(`/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=gp00&${keyword}`)
+     },
 }
